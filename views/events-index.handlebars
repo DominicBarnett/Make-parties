@@ -1,0 +1,20 @@
+  <!-- events-index -->
+  <div class="row mt-4">
+      <div class="col-lg-6 offset-lg-3">
+          <h1>Events</h1>
+            {{#each events}}
+                <div class="card mt-3">
+                <img class="img-fluid" src="https://images.unsplash.com/photo-1538648759472-7251f7cb2c2f?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{this.title}}</h5>
+                    <p class="card-text">{{this.desc}}</p>
+                    <div class="text-right">
+                    <a href="#" class="btn btn-info">Rsvp</a>
+                    <a href="#" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+                </div>
+            {{/each}}
+
+      </div>
+  </div>
