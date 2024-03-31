@@ -1,9 +1,12 @@
 // Initialize express
 const express = require('express')
+const methodOverride = require('method-override')
 const app = express()
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 const models = require('./db/models');
+// override with POST having ?_method=DELETE or ?_method=PUT
+app.use(methodOverride('_method'))
 // require handlebars
 const exphbs = require('express-handlebars');
 const Handlebars = require('handlebars')
@@ -56,4 +59,30 @@ app.get('/events/:id', (req, res) => {
     console.log(err.message);
   })
 })
-app.listen(3000);
+// EDIT
+app.get('/events/:id/edit', (req, res) => {
+  models.Event.findByPk(req.params.id).then((event) => {
+    res.render('events-edit', { event: event });
+  }).catch((err) => {
+    console.log(err.message);
+  })
+});
+// UPDATE
+app.put('/events/:id', (req, res) => {
+  models.Event.findByPk(req.params.id).then(event => {
+    event.update(req.body).then(event => {
+      res.redirect(`/events/${req.params.id}`);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }).catch((err) => {
+    console.log(err);
+  });
+});
+// Choose a port to listen on
+const port = process.env.PORT || 3000;
+
+// Tell the app what port to listen on
+app.listen(port, () => {
+  console.log('App listening on port 3000!')
+})
